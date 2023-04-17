@@ -81,6 +81,15 @@
                                    name="address" id="address"
                                    placeholder="Адрес прошествия">
                         </div>
+                        <!--Выпадающий список тип инцидента-->
+                        <div class="form-group">
+                            <label for="type.id">Тип</label>
+                            <select class="form-control" id="type.id" name="type.id">
+                                <option th:each="type : ${types}"
+                                        th:text="${type.name}"
+                                        th:value="${type.id}"></option>
+                            </select>
+                        </div>
                         <!--Отмена, Сохранить.-->
                         <a class="btn btn-secondary mt-3"
                            th:href="@{accidents/list}">Отмена</a>

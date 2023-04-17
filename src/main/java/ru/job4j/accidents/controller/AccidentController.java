@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.service.AccidentService;
+import ru.job4j.accidents.service.AccidentTypeService;
 
 /**
  * 3. Мидл
@@ -21,6 +22,7 @@ import ru.job4j.accidents.service.AccidentService;
 @RequestMapping("/accidents")
 public class AccidentController {
     private final AccidentService accidentService;
+    private final AccidentTypeService types;
 
     @GetMapping("/list")
     public String getAllAccidents(Model model) {
@@ -31,6 +33,7 @@ public class AccidentController {
 
     @GetMapping("/create")
     public String getCreateAccident(Model model) {
+        model.addAttribute("types", types.findAllType());
         model.addAttribute("user", "Dmitry");
         return "accidents/create";
     }
@@ -50,6 +53,7 @@ public class AccidentController {
             return "errors/404";
         }
         model.addAttribute("accident", accidentOptional.get());
+        model.addAttribute("types", types.findAllType());
         model.addAttribute("user", "Dima");
         return "accidents/edit";
     }

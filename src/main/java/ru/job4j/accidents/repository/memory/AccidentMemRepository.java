@@ -1,7 +1,8 @@
-package ru.job4j.accidents.repository;
+package ru.job4j.accidents.repository.memory;
 
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.repository.AccidentRepository;
 
 import java.util.Collection;
 import java.util.Map;
@@ -23,13 +24,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AccidentMemRepository implements AccidentRepository {
     private final AtomicInteger key = new AtomicInteger(0);
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
+    private final AccidentTypeMemRepository types = new AccidentTypeMemRepository();
 
     public AccidentMemRepository() {
-        create(new Accident(0, "Accident_1", "text_Accident_1", "Address accident 1"));
-        create(new Accident(0, "Accident_2", "text_Accident_2", "Address accident 2"));
-        create(new Accident(0, "Accident_3", "text_Accident_3", "Address accident 3"));
-        create(new Accident(0, "Accident_4", "text_Accident_4", "Address accident 4"));
-        create(new Accident(0, "Accident_5", "text_Accident_5", "Address accident 5"));
+        create(new Accident(
+                0, "Accident_1", "text_Accident_1", "Address accident 1",
+                types.findByIdType(1).get()));
+        create(new Accident(
+                0, "Accident_2", "text_Accident_2", "Address accident 2",
+                types.findByIdType(2).get()));
+        create(new Accident(
+                0, "Accident_3", "text_Accident_3", "Address accident 3",
+                types.findByIdType(3).get()));
+        create(new Accident(
+                0, "Accident_4", "text_Accident_4", "Address accident 4",
+                types.findByIdType(4).get()));
+        create(new Accident(
+                0, "Accident_5", "text_Accident_5", "Address accident 5",
+                types.findByIdType(2).get()));
     }
 
     @Override

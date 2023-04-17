@@ -22,9 +22,12 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SimpleAccidentService implements AccidentService {
     private final AccidentRepository accidentRepository;
+    private final AccidentTypeService accidentTypeService;
 
     @Override
     public Accident create(Accident accident) {
+        var type = accidentTypeService.findByIdType(accident.getType().getId());
+        type.ifPresent(accident::setType);
         return accidentRepository.create(accident);
     }
 
@@ -35,6 +38,8 @@ public class SimpleAccidentService implements AccidentService {
 
     @Override
     public boolean update(Accident accident) {
+        var type = accidentTypeService.findByIdType(accident.getType().getId());
+        type.ifPresent(accident::setType);
         return accidentRepository.update(accident);
     }
 
