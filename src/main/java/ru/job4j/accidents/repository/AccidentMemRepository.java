@@ -39,13 +39,18 @@ public class AccidentMemRepository implements AccidentRepository {
     }
 
     @Override
+    public Optional<Accident> findById(int accidentId) {
+        return Optional.ofNullable(accidents.get(accidentId));
+    }
+
+    @Override
     public boolean update(Accident accident) {
         return accident.equals(accidents.put(accident.getId(), accident));
     }
 
     @Override
-    public Optional<Accident> findById(int accidentId) {
-        return Optional.ofNullable(accidents.get(accidentId));
+    public boolean delete(int accidentId) {
+        return accidents.remove(accidentId) != null;
     }
 
     @Override

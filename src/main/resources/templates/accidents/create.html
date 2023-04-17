@@ -14,15 +14,15 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <title>ACCIDENTS</title>
+    <title>NEW ACCIDENTS</title>
 </head>
 <body>
 <div class="container-xl">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                <img src="../static/images/logo/logo_page.png"
-                     alt="ACCIDENTS" th:src="@{images/logo/logo_page.png}"
+                <img src="../../static/images/logo/logo_page.png"
+                     alt="ACCIDENTS" th:src="@{../images/logo/logo_page.png}"
                      width="140" height="98">
             </a>
             <button class="navbar-toggler" type="button"
@@ -44,6 +44,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Pricing</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Disabled</a>
+                    </li>
                 </ul>
                 <span class="navbar-text" th:text="${user}">
                     USER
@@ -51,27 +54,41 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-4">
-        <h3>Проект АВТОНАРУШИТЕЛИ</h3>
-            <ul>
-                <li><a th:href="@{/accidents/list}">Все инциденты</a></li>
-                <li><a th:href="@{/accidents/create}">Добавить инцидент</a></li>
-                <li>
-                    <a class="btn btn-outline-success mt-4"
-                       role="button"
-                       th:href="@{/accidents/create}">Добавить инцидент
-                    </a>
-                </li>
-            </ul>
-    </div>
     <div class="container">
-        <p class="pt-3 mt-4 text-muted border-top">
-            TODO list<br>
-            <a href=mailto:haoos@inbox.ru>haoos@inbox.ru</a> <br>
-            <a href=https://t.me/Dima202020>telegram Dima202020</a> <br>
-            <a href="https://github.com/Dima-Stepanov">github.com Dima-Stepanov</a> <br>
-            <a href="https://job4j.ru">Job4j</a>
-        </p>
+        <div class="row pt-3">
+            <div class="card" style="width: 100%">
+                <div class="card-header">
+                    Новый инцидент
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/accidents/saveAccident}" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="0"/>
+                        <div class="form-group">
+                            <label for="name">Имя</label>
+                            <input type="text" class="form-control"
+                                   name="name" id="name"
+                                   placeholder="Название инцидента">
+                        </div>
+                        <div class="form-group">
+                            <label for="text">Описание</label>
+                            <textarea class="form-control" rows="3"
+                                      name="text" id="text"
+                                      placeholder="Введите описание инцидента"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Адрес</label>
+                            <input class="form-control" type="text"
+                                   name="address" id="address"
+                                   placeholder="Адрес прошествия">
+                        </div>
+                        <!--Отмена, Сохранить.-->
+                        <a class="btn btn-secondary mt-3"
+                           th:href="@{accidents/list}">Отмена</a>
+                        <button class="btn btn-success mt-3" type="submit">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
