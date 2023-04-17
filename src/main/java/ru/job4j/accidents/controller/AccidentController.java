@@ -41,12 +41,12 @@ public class AccidentController {
         return "redirect:/accidents/list";
     }
 
-    @GetMapping("/{accidentId}")
-    public String getEditAccident(@PathVariable int accidentId, Model model) {
-        var accidentOptional = accidentService.findById(accidentId);
+    @GetMapping("/editAccident")
+    public String getEditAccident(@RequestParam("id") int id, Model model) {
+        var accidentOptional = accidentService.findById(id);
         if (accidentOptional.isEmpty()) {
             model.addAttribute("message",
-                    "Accident by ID: " + accidentId + ",  not found");
+                    "Accident by ID: " + id + ",  not found");
             return "errors/404";
         }
         model.addAttribute("accident", accidentOptional.get());
@@ -60,12 +60,12 @@ public class AccidentController {
         return "redirect:/accidents/list";
     }
 
-    @GetMapping("/delete/{accidentId}")
-    public String deleteAccident(@PathVariable int accidentId, Model model) {
-        var result = accidentService.delete(accidentId);
+    @GetMapping("/delete")
+    public String deleteAccident(@RequestParam("id") int id, Model model) {
+        var result = accidentService.delete(id);
         if (!result) {
             model.addAttribute("message",
-                    "Accident by ID: " + accidentId + ",  not found");
+                    "Accident by ID: " + id + ",  not found");
             return "errors/404";
         }
         return "redirect:/accidents/list";
