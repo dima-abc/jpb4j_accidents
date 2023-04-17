@@ -4,6 +4,7 @@ import ru.job4j.accidents.model.Accident;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * 3. Мидл
@@ -17,11 +18,11 @@ import java.util.Optional;
  * @since 16.04.2023
  */
 public interface AccidentService {
-    Accident create(Accident accident);
+    Accident create(Accident accident, Set<Integer> rIds);
 
     Optional<Accident> findById(int accidentId);
 
-    boolean update(Accident accident);
+    boolean update(Accident accident, Set<Integer> rIds);
 
     boolean delete(int accidentId);
 

@@ -1,9 +1,8 @@
 package ru.job4j.accidents.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.Set;
 
 /**
  * 3. Мидл
@@ -26,4 +25,6 @@ public class Accident {
     private String text;
     private String address;
     private AccidentType type;
+    @ToString.Exclude
+    private Set<Rule> rules;
 }

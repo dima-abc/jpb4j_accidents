@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.service.AccidentService;
 import ru.job4j.accidents.service.AccidentTypeService;
+import ru.job4j.accidents.service.RuleService;
+
+import java.util.Set;
 
 /**
  * 3. Мидл
@@ -23,6 +26,7 @@ import ru.job4j.accidents.service.AccidentTypeService;
 public class AccidentController {
     private final AccidentService accidentService;
     private final AccidentTypeService types;
+    private final RuleService rules;
 
     @GetMapping("/list")
     public String getAllAccidents(Model model) {
@@ -34,13 +38,15 @@ public class AccidentController {
     @GetMapping("/create")
     public String getCreateAccident(Model model) {
         model.addAttribute("types", types.findAllType());
+        model.addAttribute("rules", rules.findAllRule());
         model.addAttribute("user", "Dmitry");
         return "accidents/create";
     }
 
     @PostMapping("/saveAccident")
-    public String saveAccident(@ModelAttribute Accident accident) {
-        accidentService.create(accident);
+    public String saveAccident(@ModelAttribute Accident accident,
+                               @RequestParam(required = false) Set<Integer> rIds) {
+        accidentService.create(accident, rIds);
         return "redirect:/accidents/list";
     }
 
@@ -54,13 +60,15 @@ public class AccidentController {
         }
         model.addAttribute("accident", accidentOptional.get());
         model.addAttribute("types", types.findAllType());
+        model.addAttribute("rules", rules.findAllRule());
         model.addAttribute("user", "Dima");
         return "accidents/edit";
     }
 
     @PostMapping("/editAccident")
-    public String editAccident(@ModelAttribute Accident accident) {
-        accidentService.update(accident);
+    public String editAccident(@ModelAttribute Accident accident,
+                               @RequestParam(required = false) Set<Integer> rIds) {
+        accidentService.update(accident, rIds);
         return "redirect:/accidents/list";
     }
 

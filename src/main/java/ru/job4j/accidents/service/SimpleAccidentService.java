@@ -3,10 +3,13 @@ package ru.job4j.accidents.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.AccidentRepository;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 3. Мидл
@@ -23,9 +26,12 @@ import java.util.Optional;
 public class SimpleAccidentService implements AccidentService {
     private final AccidentRepository accidentRepository;
     private final AccidentTypeService accidentTypeService;
+    private final RuleService ruleService;
 
     @Override
-    public Accident create(Accident accident) {
+    public Accident create(Accident accident, Set<Integer> rIds) {
+        var rules = getRuleByRIDs(rIds);
+        accident.setRules(rules);
         var type = accidentTypeService.findByIdType(accident.getType().getId());
         type.ifPresent(accident::setType);
         return accidentRepository.create(accident);
@@ -37,7 +43,9 @@ public class SimpleAccidentService implements AccidentService {
     }
 
     @Override
-    public boolean update(Accident accident) {
+    public boolean update(Accident accident, Set<Integer> rIds) {
+        var rules = getRuleByRIDs(rIds);
+        accident.setRules(rules);
         var type = accidentTypeService.findByIdType(accident.getType().getId());
         type.ifPresent(accident::setType);
         return accidentRepository.update(accident);
@@ -51,5 +59,18 @@ public class SimpleAccidentService implements AccidentService {
     @Override
     public Collection<Accident> findAll() {
         return accidentRepository.findAll();
+    }
+
+    /**
+     * Преобразовывает Set<Integer> в Set<Rule>
+     *
+     * @param rIds Set<Integer>
+     * @return Set<Rule>
+     */
+    private Set<Rule> getRuleByRIDs(Set<Integer> rIds) {
+        return rIds.stream().map(ruleService::findByIdRule)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
     }
 }

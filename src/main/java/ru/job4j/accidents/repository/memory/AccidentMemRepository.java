@@ -2,11 +2,13 @@ package ru.job4j.accidents.repository.memory;
 
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.AccidentRepository;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -27,21 +29,30 @@ public class AccidentMemRepository implements AccidentRepository {
     private final AccidentTypeMemRepository types = new AccidentTypeMemRepository();
 
     public AccidentMemRepository() {
+        var rule1 = new Rule(1, "Статья 1");
+        var rule2 = new Rule(2, "Статья 2");
+        var rule3 = new Rule(3, "Статья 3");
+        var rule4 = new Rule(4, "Статья 4");
         create(new Accident(
                 0, "Accident_1", "text_Accident_1", "Address accident 1",
-                types.findByIdType(1).get()));
+                types.findByIdType(1).get(),
+                Set.of(rule1)));
         create(new Accident(
                 0, "Accident_2", "text_Accident_2", "Address accident 2",
-                types.findByIdType(2).get()));
+                types.findByIdType(2).get(),
+                Set.of(rule1, rule2, rule3, rule4)));
         create(new Accident(
                 0, "Accident_3", "text_Accident_3", "Address accident 3",
-                types.findByIdType(3).get()));
+                types.findByIdType(3).get(),
+                Set.of(rule1, rule2)));
         create(new Accident(
                 0, "Accident_4", "text_Accident_4", "Address accident 4",
-                types.findByIdType(4).get()));
+                types.findByIdType(4).get(),
+                Set.of(rule1, rule2, rule3)));
         create(new Accident(
                 0, "Accident_5", "text_Accident_5", "Address accident 5",
-                types.findByIdType(2).get()));
+                types.findByIdType(2).get(),
+                Set.of(rule2, rule3, rule4)));
     }
 
     @Override

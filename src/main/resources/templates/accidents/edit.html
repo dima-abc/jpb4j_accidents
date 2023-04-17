@@ -76,22 +76,36 @@
                                       name="text" id="text" th:field="*{text}"
                                       placeholder="Введите описание инцидента"></textarea>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="address">Адрес</label>
                             <input class="form-control" type="text"
                                    name="address" id="address" th:field="*{address}"
                                    placeholder="Адрес прошествия">
                         </div>
-                        <!--Выпадающий список тип инцидента-->
-                        <div class="form-group">
-                            <label for="type.id">Тип</label>
-                            <select class="form-control" id="type.id" name="type.id" th:field="${accident.type.id}">
-                                <option th:each="type : ${types}"
-                                        th:text="${type.name}"
-                                        th:value="${type.id}"
-                                        th:selected="${accident.type}"
-                                ></option>
-                            </select>
+                        <div class="row">
+                            <!--TYPE Выпадающий список тип инцидента-->
+                            <div class="col mb-3">
+                                <label for="type.id">Тип</label>
+                                <select class="form-control" id="type.id" name="type.id" th:field="${accident.type.id}">
+                                    <option th:each="type : ${types}"
+                                            th:text="${type.name}"
+                                            th:value="${type.id}"
+                                            th:selected="${accident.type}"
+                                    ></option>
+                                </select>
+                            </div>
+                            <!--RULES статьи нарушения-->
+                            <div class="col mb-3">
+                                <label for="rIds">Статьи</label>
+                                <select class="form-control"
+                                        id="rIds" name="rIds" size="4" multiple="multiple">
+                                    <option th:each="rule : ${rules}"
+                                            th:value="${rule.id}"
+                                            th:text="${rule.name}"
+                                            th:selected="${accident.rules.contains(rule)}">
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                         <!--Отмена-->
                         <a class="btn btn-secondary mt-3"
