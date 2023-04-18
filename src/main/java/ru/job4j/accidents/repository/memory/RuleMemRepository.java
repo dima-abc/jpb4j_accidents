@@ -1,6 +1,5 @@
 package ru.job4j.accidents.repository.memory;
 
-import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.RuleRepository;
 
@@ -20,10 +19,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Dmitry Stepanov, user Dmitry
  * @since 17.04.2023
  */
-@Repository
 public class RuleMemRepository implements RuleRepository {
-    private AtomicInteger key = new AtomicInteger(0);
-    private Map<Integer, Rule> rules = new ConcurrentHashMap<>();
+    private final AtomicInteger key = new AtomicInteger(0);
+    private final Map<Integer, Rule> rules = new ConcurrentHashMap<>();
 
     public RuleMemRepository() {
         rules.put(key.incrementAndGet(), new Rule(key.get(), "Статья 1"));

@@ -18,7 +18,7 @@ import java.util.Set;
  * @since 16.04.2023
  */
 public interface AccidentService {
-    Accident create(Accident accident, Set<Integer> rIds);
+    Accident save(Accident accident, Set<Integer> rIds);
 
     Optional<Accident> findById(int accidentId);
 

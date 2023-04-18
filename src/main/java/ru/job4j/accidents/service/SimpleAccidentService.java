@@ -25,16 +25,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class SimpleAccidentService implements AccidentService {
     private final AccidentRepository accidentRepository;
-    private final AccidentTypeService accidentTypeService;
-    private final RuleService ruleService;
 
     @Override
-    public Accident create(Accident accident, Set<Integer> rIds) {
+    public Accident save(Accident accident, Set<Integer> rIds) {
         var rules = getRuleByRIDs(rIds);
         accident.setRules(rules);
-        var type = accidentTypeService.findByIdType(accident.getType().getId());
-        type.ifPresent(accident::setType);
-        return accidentRepository.create(accident);
+        return accidentRepository.save(accident);
     }
 
     @Override
@@ -46,8 +42,6 @@ public class SimpleAccidentService implements AccidentService {
     public boolean update(Accident accident, Set<Integer> rIds) {
         var rules = getRuleByRIDs(rIds);
         accident.setRules(rules);
-        var type = accidentTypeService.findByIdType(accident.getType().getId());
-        type.ifPresent(accident::setType);
         return accidentRepository.update(accident);
     }
 
@@ -68,9 +62,7 @@ public class SimpleAccidentService implements AccidentService {
      * @return Set<Rule>
      */
     private Set<Rule> getRuleByRIDs(Set<Integer> rIds) {
-        return rIds.stream().map(ruleService::findByIdRule)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+        return rIds.stream().map(id -> new Rule(id, null))
                 .collect(Collectors.toSet());
     }
 }
