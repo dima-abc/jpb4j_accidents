@@ -29,12 +29,10 @@ public class SimpleAccidentService implements AccidentService {
     private final RuleService ruleService;
 
     @Override
-    public Accident create(Accident accident, Set<Integer> rIds) {
+    public Accident save(Accident accident, Set<Integer> rIds) {
         var rules = getRuleByRIDs(rIds);
         accident.setRules(rules);
-        var type = accidentTypeService.findByIdType(accident.getType().getId());
-        type.ifPresent(accident::setType);
-        return accidentRepository.create(accident);
+        return accidentRepository.save(accident);
     }
 
     @Override
@@ -46,8 +44,6 @@ public class SimpleAccidentService implements AccidentService {
     public boolean update(Accident accident, Set<Integer> rIds) {
         var rules = getRuleByRIDs(rIds);
         accident.setRules(rules);
-        var type = accidentTypeService.findByIdType(accident.getType().getId());
-        type.ifPresent(accident::setType);
         return accidentRepository.update(accident);
     }
 

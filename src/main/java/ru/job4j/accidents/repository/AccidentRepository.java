@@ -16,7 +16,7 @@ import java.util.Optional;
  * @since 16.04.2023
  */
 public interface AccidentRepository {
-    Accident create(Accident accident);
+    Accident save(Accident accident);
 
     Optional<Accident> findById(int accidentId);
 

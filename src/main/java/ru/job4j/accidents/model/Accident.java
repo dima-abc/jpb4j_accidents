@@ -2,6 +2,7 @@ package ru.job4j.accidents.model;
 
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -26,5 +27,9 @@ public class Accident {
     private String address;
     private AccidentType type;
     @ToString.Exclude
-    private Set<Rule> rules;
+    private Set<Rule> rules = new HashSet<>();
+
+    public void addRule(Rule rule) {
+        rules.add(rule);
+    }
 }
