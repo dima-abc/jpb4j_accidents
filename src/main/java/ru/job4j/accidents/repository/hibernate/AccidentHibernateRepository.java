@@ -2,7 +2,6 @@ package ru.job4j.accidents.repository.hibernate;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.repository.AccidentRepository;
 
@@ -21,7 +20,6 @@ import java.util.Optional;
  * @author Dmitry Stepanov, user Dmitry
  * @since 19.04.2023
  */
-@Repository
 @AllArgsConstructor
 @Slf4j
 public class AccidentHibernateRepository implements AccidentRepository {

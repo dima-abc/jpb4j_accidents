@@ -31,12 +31,12 @@ public class RuleMemRepository implements RuleRepository {
     }
 
     @Override
-    public Optional<Rule> findByIdRule(int ruleId) {
+    public Optional<Rule> findById(int ruleId) {
         return Optional.ofNullable(rules.get(ruleId));
     }
 
     @Override
-    public Collection<Rule> findAllRule() {
+    public Collection<Rule> findAll() {
         return rules.values();
     }
 }

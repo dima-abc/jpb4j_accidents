@@ -35,7 +35,7 @@ public class Accident {
     @Column(name = "AC_ADDRESS")
     private String address;
     @ManyToOne
-    @JoinColumn(name = "TYPE_ID")
+    @JoinColumn(name = "TYPE_ID", foreignKey = @ForeignKey(name = "FK_ACCIDENT_TYPE"))
     private AccidentType type;
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)

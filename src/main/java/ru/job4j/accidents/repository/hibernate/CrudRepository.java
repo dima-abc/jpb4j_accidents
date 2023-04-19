@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.QueryHints;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,6 @@ import java.util.function.Function;
  * @author Dmitry Stepanov, user Dmitry
  * @since 19.04.2023
  */
-@Component
 @AllArgsConstructor
 @Slf4j
 public class CrudRepository {

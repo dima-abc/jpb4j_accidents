@@ -37,7 +37,7 @@ class AccidentTypeMemRepositoryTest {
     @Test
     public void whenFindByIdTypeThenReturnOptional() {
         var expectedType = Optional.of(new AccidentType(1, "Две машины"));
-        var actualType = types.findByIdType(expectedType.get().getId());
+        var actualType = types.findById(expectedType.get().getId());
 
         assertThat(actualType).usingRecursiveComparison().isEqualTo(expectedType);
     }

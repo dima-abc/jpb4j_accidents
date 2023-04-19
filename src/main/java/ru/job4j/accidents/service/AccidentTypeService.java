@@ -2,7 +2,6 @@ package ru.job4j.accidents.service;
 
 import ru.job4j.accidents.model.AccidentType;
 
-import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -17,5 +16,5 @@ import java.util.Optional;
 public interface AccidentTypeService {
     Optional<AccidentType> findByIdType(int typeId);
 
-    Collection<AccidentType> findAllType();
+    Iterable<AccidentType> findAllType();
 }

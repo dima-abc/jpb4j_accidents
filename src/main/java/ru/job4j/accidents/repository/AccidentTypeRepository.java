@@ -16,7 +16,7 @@ import java.util.Optional;
  * @since 17.04.2023
  */
 public interface AccidentTypeRepository {
-    Optional<AccidentType> findByIdType(int typeId);
+    Optional<AccidentType> findById(int typeId);
 
     Collection<AccidentType> findAll();
 }

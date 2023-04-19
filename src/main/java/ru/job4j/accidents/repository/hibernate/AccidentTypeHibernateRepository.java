@@ -1,7 +1,6 @@
 package ru.job4j.accidents.repository.hibernate;
 
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.repository.AccidentTypeRepository;
 
@@ -20,13 +19,12 @@ import java.util.Optional;
  * @author Dmitry Stepanov, user Dmitry
  * @since 19.04.2023
  */
-@Repository
 @AllArgsConstructor
 public class AccidentTypeHibernateRepository implements AccidentTypeRepository {
     private final CrudRepository crud;
 
     @Override
-    public Optional<AccidentType> findByIdType(int typeId) {
+    public Optional<AccidentType> findById(int typeId) {
         return crud.optional(
                 "from AccidentType where id =:typeId",
                 AccidentType.class,

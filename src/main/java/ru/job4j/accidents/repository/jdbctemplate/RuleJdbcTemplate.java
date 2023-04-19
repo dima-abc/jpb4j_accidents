@@ -26,13 +26,13 @@ public class RuleJdbcTemplate implements RuleRepository {
     private final JdbcTemplate jdbc;
 
     @Override
-    public Optional<Rule> findByIdRule(int ruleId) {
+    public Optional<Rule> findById(int ruleId) {
         Rule rule = jdbc.queryForObject("SELECT * FROM rules WHERE id = ?", new RuleRowMapper(), ruleId);
         return Optional.ofNullable(rule);
     }
 
     @Override
-    public Collection<Rule> findAllRule() {
+    public Collection<Rule> findAll() {
         return jdbc.query("SELECT * FROM rules",
                 new RuleRowMapper());
     }

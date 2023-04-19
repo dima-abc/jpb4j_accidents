@@ -3,9 +3,8 @@ package ru.job4j.accidents.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Rule;
-import ru.job4j.accidents.repository.RuleRepository;
+import ru.job4j.accidents.repository.springdata.RuleSpringDataRepository;
 
-import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -21,15 +20,15 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class SimpleRuleService implements RuleService {
-    private final RuleRepository ruleRepository;
+    private final RuleSpringDataRepository ruleRepository;
 
     @Override
     public Optional<Rule> findByIdRule(int ruleId) {
-        return ruleRepository.findByIdRule(ruleId);
+        return ruleRepository.findById(ruleId);
     }
 
     @Override
-    public Collection<Rule> findAllRule() {
-        return ruleRepository.findAllRule();
+    public Iterable<Rule> findAllRule() {
+        return ruleRepository.findAll();
     }
 }

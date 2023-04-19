@@ -16,7 +16,7 @@ import java.util.Optional;
  * @since 17.04.2023
  */
 public interface RuleRepository {
-    Optional<Rule> findByIdRule(int ruleId);
+    Optional<Rule> findById(int ruleId);
 
-    Collection<Rule> findAllRule();
+    Collection<Rule> findAll();
 }

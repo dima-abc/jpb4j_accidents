@@ -26,7 +26,7 @@ public class AccidentTypeJdbcTemplate implements AccidentTypeRepository {
     private final JdbcTemplate jdbc;
 
     @Override
-    public Optional<AccidentType> findByIdType(int typeId) {
+    public Optional<AccidentType> findById(int typeId) {
         AccidentType accidentType = jdbc.queryForObject(
                 "SELECT * FROM accident_types WHERE id = ?",
                 new AccidentTypeRowMapper(), typeId);

@@ -31,7 +31,7 @@ public class AccidentTypeMemRepository implements AccidentTypeRepository {
     }
 
     @Override
-    public Optional<AccidentType> findByIdType(int typeId) {
+    public Optional<AccidentType> findById(int typeId) {
         return Optional.ofNullable(types.get(typeId));
     }
 

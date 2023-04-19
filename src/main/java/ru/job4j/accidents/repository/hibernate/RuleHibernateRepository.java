@@ -1,7 +1,6 @@
 package ru.job4j.accidents.repository.hibernate;
 
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.RuleRepository;
 
@@ -21,13 +20,12 @@ import java.util.Optional;
  * @author Dmitry Stepanov, user Dmitry
  * @since 19.04.2023
  */
-@Repository
 @AllArgsConstructor
 public class RuleHibernateRepository implements RuleRepository {
     private final CrudRepository crud;
 
     @Override
-    public Optional<Rule> findByIdRule(int ruleId) {
+    public Optional<Rule> findById(int ruleId) {
         return crud.optional(
                 "from Rule where id =:ruleId",
                 Rule.class,
@@ -35,7 +33,7 @@ public class RuleHibernateRepository implements RuleRepository {
     }
 
     @Override
-    public Collection<Rule> findAllRule() {
+    public Collection<Rule> findAll() {
         return crud.query("from Rule", Rule.class);
     }
 }
