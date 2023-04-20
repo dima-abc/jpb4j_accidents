@@ -41,16 +41,17 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/accidents/create}">Добавить Инцидент</a>
                     </li>
+                </ul>
+                <ul class="nav justify-content-end">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                        <div class="nav-link link-dark px-2">
+                            <a th:href="@{/logout}">
+                                <span th:text="${user.username}"></span>
+                                <span> | Выйти</span>
+                            </a>
+                        </div>
                     </li>
                 </ul>
-                <span class="navbar-text" th:text="${user}">
-                    USER
-                </span>
             </div>
         </div>
     </nav>

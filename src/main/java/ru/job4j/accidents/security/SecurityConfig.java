@@ -6,7 +6,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.sql.DataSource;
 
 
 /**
@@ -14,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * 3.4. Spring
  * 3.4.4. Security
  * 0. Spring Security [#6879]
+ * 1. Авторизация через JDBC [#2094]
  * SecurityConfig отдельный класс в котором сделаны настройки для авторизации.
  *
  * @author Dmitry Stepanov, user Dmitry
@@ -24,16 +28,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
+    private final DataSource dataSource;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .withUser("user")
-                .password(passwordEncoder.encode("123456")).roles("USER")
-                .and()
-                .withUser("admin")
-                .password(passwordEncoder.encode("123456")).roles("USER", "ADMIN");
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .withUser(User.withUsername("user")
+                        .password(passwordEncoder.encode("123"))
+                        .roles("USER"))
+                .withUser(User.withUsername("admin")
+                        .password(passwordEncoder.encode("root"))
+                        .roles("ADMIN"));
     }
 
     @Override
