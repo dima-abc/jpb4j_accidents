@@ -46,17 +46,19 @@ public class AccidentController {
         return "accidents/create";
     }
 
-    @PostMapping("/saveAccident")
+    @PostMapping("/save")
     public String saveAccident(@ModelAttribute Accident accident,
                                @RequestParam(required = false) Set<Integer> rIds) {
         accidentService.save(accident, rIds);
         return "redirect:/accidents/list";
     }
 
-    @GetMapping("/editAccident")
+    @GetMapping("/edit")
     public String getEditAccident(@RequestParam("id") int id, Model model) {
         var accidentOptional = accidentService.findById(id);
         if (accidentOptional.isEmpty()) {
+            model.addAttribute("user",
+                    SecurityContextHolder.getContext().getAuthentication().getPrincipal());
             model.addAttribute("message",
                     "Accident by ID: " + id + ",  not found");
             return "errors/404";
@@ -69,7 +71,7 @@ public class AccidentController {
         return "accidents/edit";
     }
 
-    @PostMapping("/editAccident")
+    @PostMapping("/edit")
     public String editAccident(@ModelAttribute Accident accident,
                                @RequestParam(required = false) Set<Integer> rIds) {
         accidentService.update(accident, rIds);
