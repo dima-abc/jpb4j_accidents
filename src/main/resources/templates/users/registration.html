@@ -22,22 +22,28 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
             <div class="card shadow-2-strong">
                 <div class="card-body p-5 text-center">
-                    <h1 class="h3 mb-3 fw-normal">Авторизация</h1>
+                    <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
                     <div th:if="${not #lists.isEmpty(errorMessage)}" class="alert alert-danger" role="alert">
                         <span th:text="${errorMessage}"></span>
                     </div>
-                    <form th:action="@{/login}" method="post">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <form th:action="@{/reg}" method="post">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="username" name="username">
                             <label for="username">User name</label>
                         </div>
-                        <div class="form-floating">
+                        <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="password" name="password">
                             <label for="password">Password</label>
                         </div>
                         <hr class="my-4">
-                        <button type="submit" class="w-100 btn btn-lg btn-primary">Авторизация</button>
+                        <div class="row">
+                            <div class="col">
+                                <a class="w-100 btn btn-secondary mt-3" th:href="@{/login}">Отмена</a>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="w-100 btn btn-primary mt-3">Регистрация</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

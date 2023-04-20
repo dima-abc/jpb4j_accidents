@@ -7,6 +7,7 @@ import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.springdata.AccidentSpringDataRepository;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -67,7 +68,11 @@ public class SimpleAccidentService implements AccidentService {
      * @return Set<Rule>
      */
     private Set<Rule> getRuleByRIDs(Set<Integer> rIds) {
-        return rIds.stream().map(id -> new Rule(id, String.valueOf(id)))
-                .collect(Collectors.toSet());
+        Set<Rule> result = new HashSet<>();
+        if (rIds != null) {
+            result = rIds.stream().map(id -> new Rule(id, String.valueOf(id)))
+                    .collect(Collectors.toSet());
+        }
+        return result;
     }
 }
