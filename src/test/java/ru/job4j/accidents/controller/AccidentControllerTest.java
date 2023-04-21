@@ -151,7 +151,7 @@ class AccidentControllerTest {
         this.mockMvc.perform(get("/accidents/delete?id=" + anyInt()))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("http://localhost/accidents/list"));
+                .andExpect(redirectedUrl("/accidents/list"));
     }
 
     @Test
