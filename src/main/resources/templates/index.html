@@ -41,28 +41,32 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/accidents/create}">Добавить Инцидент</a>
                     </li>
+                </ul>
+                <ul class="nav justify-content-end">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <div class="nav-link link-dark px-2">
+                            <a th:href="@{/logout}">
+                                <span th:text="${user.username}"></span>
+                                <span> | Выйти</span>
+                            </a>
+                        </div>
                     </li>
                 </ul>
-                <span class="navbar-text" th:text="${user}">
-                    USER
-                </span>
             </div>
         </div>
     </nav>
     <div class="container mt-4">
         <h3>Проект АВТОНАРУШИТЕЛИ</h3>
-            <ul>
-                <li><a th:href="@{/accidents/list}">Все инциденты</a></li>
-                <li><a th:href="@{/accidents/create}">Добавить инцидент</a></li>
-                <li>
-                    <a class="btn btn-outline-success mt-4"
-                       role="button"
-                       th:href="@{/accidents/create}">Добавить инцидент
-                    </a>
-                </li>
-            </ul>
+        <ul>
+            <li><a th:href="@{/accidents/list}">Все инциденты</a></li>
+            <li><a th:href="@{/accidents/create}">Добавить инцидент</a></li>
+            <li>
+                <a class="btn btn-outline-success mt-4"
+                   role="button"
+                   th:href="@{/accidents/create}">Добавить инцидент
+                </a>
+            </li>
+        </ul>
     </div>
     <div class="container">
         <p class="pt-3 mt-4 text-muted border-top">

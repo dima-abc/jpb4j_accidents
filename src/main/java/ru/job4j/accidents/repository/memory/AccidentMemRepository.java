@@ -33,23 +33,23 @@ public class AccidentMemRepository implements AccidentRepository {
         var rule4 = new Rule(4, "Статья 4");
         save(new Accident(
                 0, "Accident_1", "text_Accident_1", "Address accident 1",
-                types.findByIdType(1).get(),
+                types.findById(1).get(),
                 Set.of(rule1)));
         save(new Accident(
                 0, "Accident_2", "text_Accident_2", "Address accident 2",
-                types.findByIdType(2).get(),
+                types.findById(2).get(),
                 Set.of(rule1, rule2, rule3, rule4)));
         save(new Accident(
                 0, "Accident_3", "text_Accident_3", "Address accident 3",
-                types.findByIdType(3).get(),
+                types.findById(3).get(),
                 Set.of(rule1, rule2)));
         save(new Accident(
                 0, "Accident_4", "text_Accident_4", "Address accident 4",
-                types.findByIdType(4).get(),
+                types.findById(4).get(),
                 Set.of(rule1, rule2, rule3)));
         save(new Accident(
                 0, "Accident_5", "text_Accident_5", "Address accident 5",
-                types.findByIdType(2).get(),
+                types.findById(2).get(),
                 Set.of(rule2, rule3, rule4)));
     }
 

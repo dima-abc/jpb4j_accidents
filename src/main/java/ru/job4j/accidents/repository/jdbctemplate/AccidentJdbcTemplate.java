@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.AccidentRepository;
@@ -28,7 +27,6 @@ import java.util.Optional;
  * @author Dmitry Stepanov, user Dmitry
  * @since 18.04.2023
  */
-@Repository
 @AllArgsConstructor
 public class AccidentJdbcTemplate implements AccidentRepository {
     private final JdbcTemplate jdbc;

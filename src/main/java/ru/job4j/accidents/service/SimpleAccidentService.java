@@ -1,12 +1,13 @@
 package ru.job4j.accidents.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.Rule;
-import ru.job4j.accidents.repository.AccidentRepository;
+import ru.job4j.accidents.repository.springdata.AccidentSpringDataRepository;
 
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,10 +24,9 @@ import java.util.stream.Collectors;
  */
 @Service
 @AllArgsConstructor
+@Slf4j
 public class SimpleAccidentService implements AccidentService {
-    private final AccidentRepository accidentRepository;
-    private final AccidentTypeService accidentTypeService;
-    private final RuleService ruleService;
+    private final AccidentSpringDataRepository accidentRepository;
 
     @Override
     public Accident save(Accident accident, Set<Integer> rIds) {
@@ -42,18 +42,22 @@ public class SimpleAccidentService implements AccidentService {
 
     @Override
     public boolean update(Accident accident, Set<Integer> rIds) {
-        var rules = getRuleByRIDs(rIds);
-        accident.setRules(rules);
-        return accidentRepository.update(accident);
+        return accident.equals(save(accident, rIds));
     }
 
     @Override
     public boolean delete(int accidentId) {
-        return accidentRepository.delete(accidentId);
+        try {
+            accidentRepository.deleteById(accidentId);
+            return true;
+        } catch (Exception e) {
+            log.error("Error delete Accident ID: {}", accidentId);
+            return false;
+        }
     }
 
     @Override
-    public Collection<Accident> findAll() {
+    public Iterable<Accident> findAll() {
         return accidentRepository.findAll();
     }
 
@@ -64,9 +68,11 @@ public class SimpleAccidentService implements AccidentService {
      * @return Set<Rule>
      */
     private Set<Rule> getRuleByRIDs(Set<Integer> rIds) {
-        return rIds.stream().map(ruleService::findByIdRule)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
+        Set<Rule> result = new HashSet<>();
+        if (rIds != null) {
+            result = rIds.stream().map(id -> new Rule(id, null))
+                    .collect(Collectors.toSet());
+        }
+        return result;
     }
 }
