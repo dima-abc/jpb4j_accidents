@@ -82,6 +82,8 @@ public class AccidentController {
     public String deleteAccident(@RequestParam("id") int id, Model model) {
         var result = accidentService.delete(id);
         if (!result) {
+            model.addAttribute("user",
+                    SecurityContextHolder.getContext().getAuthentication().getPrincipal());
             model.addAttribute("message",
                     "Accident by ID: " + id + ",  not found");
             return "errors/404";

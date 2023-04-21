@@ -70,7 +70,7 @@ public class SimpleAccidentService implements AccidentService {
     private Set<Rule> getRuleByRIDs(Set<Integer> rIds) {
         Set<Rule> result = new HashSet<>();
         if (rIds != null) {
-            result = rIds.stream().map(id -> new Rule(id, String.valueOf(id)))
+            result = rIds.stream().map(id -> new Rule(id, null))
                     .collect(Collectors.toSet());
         }
         return result;

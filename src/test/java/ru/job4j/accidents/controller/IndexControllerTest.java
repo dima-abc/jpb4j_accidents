@@ -44,6 +44,6 @@ class IndexControllerTest {
         this.mockMvc.perform(get("/index"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/login"));
+                .andExpect(redirectedUrl("http://localhost/login"));
     }
 }

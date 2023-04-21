@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.model.User;
 import ru.job4j.accidents.repository.springdata.AuthoritySpringDataRepository;
-import ru.job4j.accidents.repository.springdata.UserSpringDataRepository;
 import ru.job4j.accidents.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +65,7 @@ public class UserController {
         user.setEnabled(true);
         user.setAuthority(authority);
         var userSave = this.users.save(user);
-        if (userSave.isEmpty()) {
+        if (userSave.isEmpty() || authority == null) {
             return "redirect:/reg?error=true";
         }
         return "redirect:/login";
