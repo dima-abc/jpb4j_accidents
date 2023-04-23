@@ -2,6 +2,7 @@ package ru.job4j.accidents.repository.jdbctemplate;
 
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.RuleRepository;
 import ru.job4j.accidents.repository.jdbctemplate.rowmapper.RuleRowMapper;
@@ -27,7 +28,9 @@ public class RuleJdbcTemplate implements RuleRepository {
 
     @Override
     public Optional<Rule> findById(int ruleId) {
-        Rule rule = jdbc.queryForObject("SELECT * FROM rules WHERE id = ?", new RuleRowMapper(), ruleId);
+        Rule rule = jdbc.queryForObject(
+                "SELECT * FROM rules AS ru WHERE ru.id = ?",
+                new RuleRowMapper(), ruleId);
         return Optional.ofNullable(rule);
     }
 
