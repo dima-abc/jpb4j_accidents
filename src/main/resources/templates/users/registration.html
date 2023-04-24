@@ -22,6 +22,10 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
             <div class="card shadow-2-strong">
                 <div class="card-body p-5 text-center">
+                    <div class="text-center">
+                        <img class="form-floating mb-3" src="../../static/images/logo/logo_accidents.png"
+                             alt="ACCIDENTS" th:src="@{../images/logo/logo_accidents.png}">
+                    </div>
                     <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
                     <div th:if="${not #lists.isEmpty(errorMessage)}" class="alert alert-danger" role="alert">
                         <span th:text="${errorMessage}"></span>

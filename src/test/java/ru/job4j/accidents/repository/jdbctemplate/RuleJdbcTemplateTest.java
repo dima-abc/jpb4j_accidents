@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.test.jdbc.JdbcTestUtils;
 import ru.job4j.accidents.model.Rule;
 
 import java.sql.PreparedStatement;
@@ -28,6 +29,8 @@ class RuleJdbcTemplateTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
+
     private static RuleJdbcTemplate rules;
 
     @BeforeEach
@@ -37,8 +40,7 @@ class RuleJdbcTemplateTest {
 
     @BeforeEach
     public void clearDataBase() {
-        jdbcTemplate.update("DELETE FROM ACCIDENTS");
-        jdbcTemplate.update("DELETE FROM RULES");
+        JdbcTestUtils.deleteFromTables(jdbcTemplate, "ACCIDENTS", "RULES");
     }
 
     @Test
