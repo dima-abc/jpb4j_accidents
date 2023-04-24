@@ -1,12 +1,14 @@
 package ru.job4j.accidents.security;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
@@ -25,25 +27,24 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
     private final DataSource dataSource;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "SELECT username, password, enabled "
-                        + "FROM users WHERE username = ?")
-                .authoritiesByUsernameQuery(
-                        "SELECT u.username, a.authority "
-                        + "FROM authorities AS a, users AS u "
-                        + "WHERE u.username = ? and u.authority_id = a.id");
+    @Bean
+    public UserDetailsManager authenticateUsers() {
+        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+        users.setUsersByUsernameQuery("SELECT username, password, enabled "
+                                      + "FROM users WHERE username = ?");
+        users.setAuthoritiesByUsernameQuery("SELECT u.username, a.authority "
+                                            + "FROM authorities AS a, users AS u "
+                                            + "WHERE u.username = ? and u.authority_id = a.id");
+        return users;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login", "/reg", "/images/logo/logo_accidents.png")
+                .antMatchers("/login", "/reg")
                 .permitAll()
                 .antMatchers("/**")
                 .hasAnyRole("ADMIN", "USER")
@@ -61,5 +62,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable();
+        return http.build();
+    }
+
+    /**
+     * Пропускаем (не блокируем) картинки и логотипы оформления стартовых страниц.
+     *
+     * @return WebSecurityCustomizer
+     */
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring()
+                .antMatchers("/css/**", "/js/**", "/images/logo/**");
     }
 }
